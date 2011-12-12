@@ -2,17 +2,18 @@ package ru.buglakov.study.term7.modelling.jpss;
 
 import java.math.BigInteger;
 
-public abstract class SimulationEvent {
+public class SimulationEvent{
 	
 	private final Time fireAt;
+	private final EventTarget target;
 
-	public SimulationEvent(BigInteger fireAfter) {
-		this(new Time(fireAfter.add(TimeMachine.getTime().getTime())));
+	public SimulationEvent(BigInteger fireAfter, EventTarget target) {
+		this(new Time(fireAfter.add(TimeMachine.getTime().getTime())),target);
 	}
 	
-	public SimulationEvent(Time fireAt){
+	public SimulationEvent(Time fireAt, EventTarget target){
 		this.fireAt = fireAt;
-		TimeMachine.registerEvent(this);
+		this.target = target;
 		
 	}
 
@@ -20,5 +21,8 @@ public abstract class SimulationEvent {
 		return fireAt;
 	}
 	
-	public abstract void fire(); 
+	public void fire() {
+		target.fire();
+	}
+	
 }

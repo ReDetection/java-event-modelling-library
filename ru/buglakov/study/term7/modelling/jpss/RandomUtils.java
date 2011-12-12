@@ -9,11 +9,11 @@ public class RandomUtils {
 
 	public static BigInteger normal(BigInteger average, BigInteger difference) {
 		BigDecimal a = new BigDecimal(Math.random());
-		a.multiply(new BigDecimal(difference));
-		a.multiply(new BigDecimal(2));
-		a.subtract(BigDecimal.ONE);
-		Logger.getLogger(RandomUtils.class.getName()).log(Level.SEVERE, "random: " + a.toPlainString());
-		return a.toBigInteger();
+		a=a.multiply(new BigDecimal(2));
+		a=a.subtract(BigDecimal.ONE);
+		a=a.multiply(new BigDecimal(difference));
+//		Logger.getLogger(RandomUtils.class.getName()).log(Level.SEVERE, "random: " + a.toPlainString());
+		return average.add(a.toBigInteger());
 	}
 	
 }
