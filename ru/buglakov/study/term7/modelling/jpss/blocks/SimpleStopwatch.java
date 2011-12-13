@@ -11,7 +11,7 @@ import ru.buglakov.study.term7.modelling.jpss.Transaction;
  * Блок, просто засекающий текущее время, когда мимо него проходит транзакт
  * @author rd
  */
-public class SimpleStopwatch extends Stat{
+public class SimpleStopwatch extends Dual{
     private List<BigInteger> log = new ArrayList<>();
     
     @Override

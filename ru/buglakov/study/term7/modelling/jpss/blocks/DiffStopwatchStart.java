@@ -10,7 +10,7 @@ import ru.buglakov.study.term7.modelling.jpss.Time;
 import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
 import ru.buglakov.study.term7.modelling.jpss.Transaction;
 
-public class DiffStopwatchStart extends Stat {
+public class DiffStopwatchStart extends Dual {
 	private final DiffStopwatch model;
 
     protected DiffStopwatchStart(DiffStopwatch model) {

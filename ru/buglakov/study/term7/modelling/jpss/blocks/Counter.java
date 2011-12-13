@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import ru.buglakov.study.term7.modelling.jpss.Transaction;
 
 
-public class Counter extends Stat {
+public class Counter extends Dual {
     
     private BigInteger counter = BigInteger.ZERO;
 
