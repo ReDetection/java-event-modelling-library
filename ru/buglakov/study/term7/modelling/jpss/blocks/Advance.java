@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.buglakov.study.term7.modelling.jpss.EventTarget;
-import ru.buglakov.study.term7.modelling.jpss.RandomUtils;
+import ru.buglakov.study.term7.modelling.jpss.Utils;
 import ru.buglakov.study.term7.modelling.jpss.SimulationEvent;
 import ru.buglakov.study.term7.modelling.jpss.Time;
 import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
@@ -43,7 +43,7 @@ public class Advance extends TransactionOutput implements TransactionInput,Event
 	
 	private Time next(){
 		return new Time(TimeMachine.getTime().getTime().add(
-							RandomUtils.normal(average, difference)
+							Utils.normal(average, difference)
 						));
 	}
 

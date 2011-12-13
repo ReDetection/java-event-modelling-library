@@ -9,15 +9,16 @@ import java.util.logging.Logger;
 
 import ru.buglakov.study.term7.modelling.jpss.Timer;
 
-public class DiffStopwatch {
+public class DiffStopwatch implements Multipoint{
 	private Map<String,Timer> map = new HashMap<>();
 	private List<LogEntry> log = new ArrayList<>();
 	
-
+	@Override
 	public DiffStopwatchStart createStart(){
 		return new DiffStopwatchStart(this);
 	}
 
+	@Override
 	public DiffStopwatchFinish createFinish(){
 		return new DiffStopwatchFinish(this);
 	}

@@ -3,7 +3,7 @@ package ru.buglakov.study.term7.modelling.jpss.blocks;
 import java.math.BigInteger;
 
 import ru.buglakov.study.term7.modelling.jpss.EventTarget;
-import ru.buglakov.study.term7.modelling.jpss.RandomUtils;
+import ru.buglakov.study.term7.modelling.jpss.Utils;
 import ru.buglakov.study.term7.modelling.jpss.SimulationEvent;
 import ru.buglakov.study.term7.modelling.jpss.Time;
 import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
@@ -47,7 +47,7 @@ public class Generate extends TransactionOutput implements EventTarget{
 	
 	private Time next(){
 		return new Time(TimeMachine.getTime().getTime().add(
-							RandomUtils.normal(average, difference)
+							Utils.normal(average, difference)
 						));
 	}
 
