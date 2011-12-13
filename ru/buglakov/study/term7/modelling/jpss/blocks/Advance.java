@@ -11,10 +11,9 @@ import ru.buglakov.study.term7.modelling.jpss.Time;
 import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
 import ru.buglakov.study.term7.modelling.jpss.Transaction;
 
-public class Advance implements TransactionInput,EventTarget{
+public class Advance extends TransactionOutput implements TransactionInput,EventTarget{
 	private final BigInteger average;
 	private final BigInteger difference;
-	private TransactionInput next;
 	private List<Transaction> tr = new ArrayList<>(20); //TODO : может, убрать отсюда queue, сделать ссылку на транзакт в Eventе?
 	
 	public Advance(long average, long difference){
@@ -38,7 +37,7 @@ public class Advance implements TransactionInput,EventTarget{
 		System.out.print('<');
 		Transaction t = tr.get(0);
 		tr.remove(0);
-		t.sendTo(next);
+		t.sendTo(getNext());
 		
 	}
 	
@@ -46,18 +45,6 @@ public class Advance implements TransactionInput,EventTarget{
 		return new Time(TimeMachine.getTime().getTime().add(
 							RandomUtils.normal(average, difference)
 						));
-	}
-
-
-	public TransactionInput getNext() {
-		return next;
-	}
-
-	public void setNext(TransactionInput next) {
-		if(this.next!=null){
-			throw new RuntimeException("Переопределение следующего блока!");
-		}
-		this.next = next;
 	}
 
 }

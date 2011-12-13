@@ -10,11 +10,10 @@ import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
 import ru.buglakov.study.term7.modelling.jpss.Transaction;
 import ru.buglakov.study.term7.modelling.jpss.TransactionManager;
 
-public class Generate implements EventTarget{
+public class Generate extends TransactionOutput implements EventTarget{
 
 	private final BigInteger average;
 	private final BigInteger difference;
-	private TransactionInput next;
 	private BigInteger count = null;
 
 	public Generate(long average, long difference){
@@ -35,7 +34,7 @@ public class Generate implements EventTarget{
 	@Override
 	public void fire() {
 		Transaction t = TransactionManager.createTransaction();
-		t.sendTo(next);
+		t.sendTo(getNext());
 		if(count!=null){
 			count = count.subtract(BigInteger.ONE);
 			if(count.equals(BigInteger.ZERO)){
@@ -62,17 +61,6 @@ public class Generate implements EventTarget{
 
 	public BigInteger getAverage() {
 		return average;
-	}
-
-	public TransactionInput getNext() {
-		return next;
-	}
-
-	public void setNext(TransactionInput nextBlock) {
-		if(this.next!=null){
-			throw new RuntimeException("Переопределение следующего блока!");
-		}
-		this.next= nextBlock;
 	}
 
 }
