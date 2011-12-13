@@ -18,7 +18,6 @@ public class TimeMachine {
 	public static void continue_() {
 		while(!events.isEmpty()){
 			SimulationEvent next = getNextEvent();
-			//TODO: increase all timestats!
 			now=next.getEventTime();
 			next.fire();
 		}
@@ -43,7 +42,4 @@ public class TimeMachine {
 	public static Time getTime(){
 		return now;
 	}
-
-	
-
 }
