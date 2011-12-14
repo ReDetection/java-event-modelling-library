@@ -4,8 +4,6 @@ import java.math.BigInteger;
 
 import ru.buglakov.study.term7.modelling.jpss.EventTarget;
 import ru.buglakov.study.term7.modelling.jpss.Utils;
-import ru.buglakov.study.term7.modelling.jpss.SimulationEvent;
-import ru.buglakov.study.term7.modelling.jpss.Time;
 import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
 import ru.buglakov.study.term7.modelling.jpss.Transaction;
 import ru.buglakov.study.term7.modelling.jpss.TransactionManager;
@@ -28,7 +26,7 @@ public class Generate extends TransactionOutput implements EventTarget{
 	
 	public void start(BigInteger count){
 		this.count  = count;
-		TimeMachine.registerEvent(new SimulationEvent(next(),this));
+        TimeMachine.delay(Utils.normal(average, difference), this);
 	}
 	
 	@Override
@@ -41,16 +39,10 @@ public class Generate extends TransactionOutput implements EventTarget{
 				return;
 			}
 		}
-		TimeMachine.registerEvent(new SimulationEvent(next(),this));
+        TimeMachine.delay(Utils.normal(average, difference), this);
 		
 	}
 	
-	private Time next(){
-		return new Time(TimeMachine.getTime().getTime().add(
-							Utils.normal(average, difference)
-						));
-	}
-
 	public BigInteger getLeftCount() {
 		return count;
 	}

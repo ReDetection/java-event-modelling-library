@@ -8,13 +8,6 @@ public class TimeMachine {
 	private static Time now = new Time(new BigInteger("0"));
 	private static ArrayList<SimulationEvent> events = new ArrayList<>(20); //TODO: переделать на автоматически сортируемую структуру!
 
-	public static void registerEvent(SimulationEvent e){
-		if(now.compareTo(e.getEventTime())>0){ //если время уже прошло, надо бросить эксепшн
-			throw new RuntimeException("Беда, время прошло уже");
-		}
-		events.add(e);
-	}
-		
 	public static void continue_() {
 		while(!events.isEmpty()){
 			SimulationEvent next = getNextEvent();
@@ -23,6 +16,14 @@ public class TimeMachine {
 		}
 		
 	}
+    
+    public static void delaySome(EventTarget target){
+        events.add(new SimulationEvent(getTime(), target));
+    }
+    
+    public static void delay(BigInteger delay, EventTarget target){
+        events.add(new SimulationEvent(getTime().getTime().add(delay),target));
+    }
 
 	private static SimulationEvent getNextEvent(){
 		SimulationEvent event = events.get(0);

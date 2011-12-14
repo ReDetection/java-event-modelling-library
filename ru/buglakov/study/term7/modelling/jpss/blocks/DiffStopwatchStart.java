@@ -1,13 +1,6 @@
 package ru.buglakov.study.term7.modelling.jpss.blocks;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import ru.buglakov.study.term7.modelling.jpss.Time;
-import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
 import ru.buglakov.study.term7.modelling.jpss.Transaction;
 
 public class DiffStopwatchStart extends Dual {

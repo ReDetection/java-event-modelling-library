@@ -6,8 +6,6 @@ import java.util.List;
 
 import ru.buglakov.study.term7.modelling.jpss.EventTarget;
 import ru.buglakov.study.term7.modelling.jpss.Utils;
-import ru.buglakov.study.term7.modelling.jpss.SimulationEvent;
-import ru.buglakov.study.term7.modelling.jpss.Time;
 import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
 import ru.buglakov.study.term7.modelling.jpss.Transaction;
 
@@ -29,7 +27,7 @@ public class Advance extends TransactionOutput implements TransactionInput,Event
 	@Override
 	public void receive(Transaction transaction) {
 		tr.add(transaction);
-		TimeMachine.registerEvent(new SimulationEvent(next(),this));
+        TimeMachine.delay(Utils.normal(average, difference), this);
 	}
 
 	@Override
@@ -39,12 +37,6 @@ public class Advance extends TransactionOutput implements TransactionInput,Event
 		tr.remove(0);
 		t.sendTo(getNext());
 		
-	}
-	
-	private Time next(){
-		return new Time(TimeMachine.getTime().getTime().add(
-							Utils.normal(average, difference)
-						));
 	}
 
 }
