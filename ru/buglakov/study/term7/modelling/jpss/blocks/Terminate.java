@@ -6,7 +6,7 @@ public class Terminate implements TransactionInput {
 
 	@Override
 	public void receive(Transaction transaction) {
-		transaction.invalidate();
+		transaction.terminate();
 		System.out.print("W");
 	}
 

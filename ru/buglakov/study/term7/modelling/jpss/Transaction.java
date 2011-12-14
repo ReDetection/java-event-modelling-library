@@ -28,9 +28,13 @@ public class Transaction {
 		return iAmAt;
 	}
 	
-	public void invalidate(){
-		TransactionManager.invalidate(this);
+	public void terminate(){
+		TransactionManager.terminate(this);
 	}
+    
+    public void invalidate(){
+        TransactionManager.invalidate(this);
+    }
 
 	@Override
 	public int hashCode() {
