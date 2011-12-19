@@ -2,6 +2,10 @@ package ru.buglakov.study.term7.modelling.jpss;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import ru.buglakov.study.term7.modelling.jpss.exceptions.BlockIsBusyException;
 
 public class TimeMachine {
 	
@@ -12,7 +16,11 @@ public class TimeMachine {
 		while(!events.isEmpty()){
 			SimulationEvent next = getNextEvent();
 			now=next.getEventTime();
-			next.fire();
+			try{
+				next.fire();
+			}catch (BlockIsBusyException e) {
+				Logger.getLogger(TimeMachine.class.getName()).log(Level.INFO, "Заявка отклонена.", e);
+			}
 		}
 		
 	}
@@ -36,7 +44,8 @@ public class TimeMachine {
 				mini=i;
 			}
 		}
-		events.remove(mini);
+        //FIXME: если максимальное время равно текущему - 30 раз пробовать и выводить исключение!
+        events.remove(mini);
 		return event;
 	}
 	
