@@ -4,7 +4,6 @@ import ru.buglakov.study.term7.modelling.jpss.blocks.Waitable;
 
 public class BlockIsBusyException extends RuntimeException {
     private final Waitable w;
-	// TODO Auto-generated 
 
 	public BlockIsBusyException(Waitable w) {
         super();

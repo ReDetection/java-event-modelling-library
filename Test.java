@@ -1,6 +1,7 @@
-import java.math.BigDecimal;
+import static ru.buglakov.study.term7.modelling.jpss.Utils.avg;
+
 import java.math.BigInteger;
-import java.util.Collection;
+
 import ru.buglakov.study.term7.modelling.jpss.Time;
 import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
 import ru.buglakov.study.term7.modelling.jpss.blocks.*;
@@ -49,22 +50,5 @@ public class Test {
         
 	}
     
-    
-    
-    
-    
-    
-    
-    public static BigInteger sum(Collection<BigInteger> log){
-        BigInteger result = BigInteger.ZERO;
-        for(BigInteger a: log){
-            result = result.add(a);
-        }
-        return result;    
-    }
-    
-    public static BigDecimal avg(Collection<BigInteger> log){
-        return new BigDecimal(sum(log)).divide(new BigDecimal(log.size()));
-    }
 
 }

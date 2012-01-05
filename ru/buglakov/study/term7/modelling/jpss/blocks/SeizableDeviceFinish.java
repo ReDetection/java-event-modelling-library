@@ -1,6 +1,7 @@
 package ru.buglakov.study.term7.modelling.jpss.blocks;
 
 import java.math.BigInteger;
+
 import ru.buglakov.study.term7.modelling.jpss.EventTarget;
 import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
 import ru.buglakov.study.term7.modelling.jpss.Transaction;
@@ -16,7 +17,7 @@ public class SeizableDeviceFinish extends Dual implements EventTarget{
 	
 	@Override
 	public void receive(Transaction transaction) {
-        TimeMachine.delay(TimeMachine.getTime().getTime(), this,transaction);
+        TimeMachine.delay(BigInteger.ZERO, this,transaction);
 		
 	}
 

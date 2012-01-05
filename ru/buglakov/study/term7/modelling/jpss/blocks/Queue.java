@@ -33,8 +33,8 @@ public class Queue extends Dual implements EventTarget{
 			try{
 				transaction.sendTo(getNext());
 			}catch (BlockIsBusyException e) {
+				e.getWaitable().registerMe(this);
 				queue.addLast(transaction);
-				TimeMachine.delaySome(this);
 			}
 		}else{
 			if(maxCount==null || maxCount > queue.size()){
@@ -55,7 +55,7 @@ public class Queue extends Dual implements EventTarget{
 				queue.removeFirst();
 			}
 		}catch (BlockIsBusyException e) {
-			TimeMachine.delaySome(this);
+			e.getWaitable().registerMe(this);
 		}
 		
 	}

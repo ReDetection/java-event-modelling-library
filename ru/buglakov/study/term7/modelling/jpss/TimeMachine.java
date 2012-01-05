@@ -35,19 +35,6 @@ public class TimeMachine {
 		
 	}
     
-    public static void delaySome(EventTarget target){
-        /* FIXME: проанализировать возможные пути задержек. Кажется, тут могут быть дедлоки.
-         *
-         * по-моему, надо сделать отдельную очередь для таких задержек.
-         * если не останется простых - то тогда им назначать время ближайшей простой задержки
-         *
-         * возможно, придется перегружать метод с параметром "какой блок ждем".
-         * если так, нужно думать хорошую архитектуру такого решения
-         */
-        SimulationEvent e = new SimulationEvent(getNextEvent().getEventTime(), target);
-        events.add(e);
-    }
-    
     public static void delay(BigInteger delay, EventTarget target){
         events.add(new SimulationEvent(getTime().getTime().add(delay),target));
     }

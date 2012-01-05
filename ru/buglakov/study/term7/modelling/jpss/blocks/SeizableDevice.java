@@ -48,7 +48,7 @@ public class SeizableDevice implements Multipoint,Waitable {
 				busy = false;
 				this.t = null;
                 if(!waiters.isEmpty()){
-                    TimeMachine.delay(TimeMachine.getTime().getTime(), waiters.get(0));
+                    TimeMachine.delay(BigInteger.ZERO, waiters.get(0));
                     waiters.remove(0);
                 }
 			}else{
