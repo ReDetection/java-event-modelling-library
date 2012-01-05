@@ -16,7 +16,6 @@ public class TransactionManager {
 		Transaction t = new Transaction(createKey());
 		map.put(t.getKey(), t);
 		tr.add(t);
-		System.out.print('-');
 		return t;
 	}
 

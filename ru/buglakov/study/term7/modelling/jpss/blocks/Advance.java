@@ -32,7 +32,6 @@ public class Advance extends Dual implements EventTarget{
 
 	@Override
 	public void fire(Transaction _) {
-		System.out.print('<');
 		Transaction t = tr.get(0);
 		tr.remove(0);
 		t.sendTo(getNext());

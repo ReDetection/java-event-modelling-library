@@ -4,6 +4,7 @@ import java.math.BigInteger;
 
 import ru.buglakov.study.term7.modelling.jpss.Time;
 import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
+import ru.buglakov.study.term7.modelling.jpss.TransactionManager;
 import ru.buglakov.study.term7.modelling.jpss.blocks.*;
 
 
@@ -16,25 +17,18 @@ public class Test {
 		SimpleStopwatch simpleStopwatch =  new SimpleStopwatch(); 
 		SimpleStopwatch simpleStopwatch2 =  new SimpleStopwatch(); 
 		DiffStopwatch stopwatch = new DiffStopwatch();
-		DiffStopwatchStart stopwatchStart = stopwatch.createStart();
-		DiffStopwatchFinish stopwatchFinish = stopwatch.createFinish();
+		Counter cstart = new Counter(), cend = new Counter(); 
         
-        Queue q = new Queue();
+        Queue q = new Queue(5);
 		DiffStopwatch queuestopwatch = new DiffStopwatch();
         SeizableDevice dev = new SeizableDevice();
         MultipointSimplifier device = new MultipointSimplifier(dev, a);
         MultipointSimplifier queue = new MultipointSimplifier(queuestopwatch, q);
         
+        Line line = new Line().add(cstart).add(simpleStopwatch).add(stopwatch.createStart()).add(queue).add(simpleStopwatch2).add(device).add(stopwatch.createFinish()).add(cend);
 		
-		g.setNext(simpleStopwatch);
-        simpleStopwatch.setNext(stopwatchStart);
-		stopwatchStart.setNext(queue);
-        queue.setNext(simpleStopwatch2);
-        simpleStopwatch2.setNext(device);
-        device.setNext(stopwatchFinish);
-        
-        
-		stopwatchFinish.setNext(new Terminate());
+		g.setNext(line);
+		line.setNext(new Terminate());
 		
 		TimeMachine.setLimit(new Time(new BigInteger("20000")));
 		Start start = new Start(null, g);
@@ -44,6 +38,9 @@ public class Test {
         System.out.println(simpleStopwatch2.getLog());
         System.out.println(queuestopwatch.getLog());
         System.out.println(stopwatch.getLog());
+        System.out.println("Заявок поступило: " + cstart.getCounter());
+        System.out.println("Заявок обслужено: " + cend.getCounter());
+        System.out.println("Заявок отклонено: " + TransactionManager.getRevoked().size());
         System.out.println("Среднее время заявки в очереди: "+avg(queuestopwatch.getLog()));
         System.out.println("Среднее время заявки в системе: "+avg(stopwatch.getLog()));
         System.out.println("Время моделирования: " + TimeMachine.getTime());
