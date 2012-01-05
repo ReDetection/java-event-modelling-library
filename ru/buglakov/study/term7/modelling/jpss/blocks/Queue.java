@@ -47,7 +47,7 @@ public class Queue extends Dual implements EventTarget{
 	}
 
 	@Override
-	public void fire() {
+	public void fire(Transaction t_) {
 		try{
 			while(!queue.isEmpty()){
 				Transaction first = queue.getFirst();

@@ -18,8 +18,8 @@ public class DiffStopwatchFinish extends Dual {
 
 	@Override
 	public void receive(Transaction transaction) {
-		log.add(diffStopwatch.stop(transaction.getKey()));
 		transaction.sendTo(getNext());
+		log.add(diffStopwatch.stop(transaction.getKey()));
 		
 	}
 

@@ -30,7 +30,7 @@ public class Generate extends TransactionOutput implements EventTarget{
 	}
 	
 	@Override
-	public void fire() {
+	public void fire(Transaction t_) {
 		Transaction t = TransactionManager.createTransaction();
 		t.sendTo(getNext());
 		if(count!=null){

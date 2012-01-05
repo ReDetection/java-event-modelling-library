@@ -22,7 +22,16 @@ public class MultipointSimplifier extends Dual {
 	
 	@Override
 	public void setNext(TransactionInput nextBlock) {
-		
-		super.setNext(nextBlock);
+		finish.setNext(nextBlock);
 	}
+
+    public Dual getFinish() {
+        return finish;
+    }
+
+    public Dual getStart() {
+        return start;
+    }
+    
+    
 }

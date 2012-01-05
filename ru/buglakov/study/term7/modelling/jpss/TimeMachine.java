@@ -8,14 +8,24 @@ import java.util.logging.Logger;
 import ru.buglakov.study.term7.modelling.jpss.exceptions.BlockIsBusyException;
 
 public class TimeMachine {
-	
+    
 	private static Time now = new Time(new BigInteger("0"));
 	private static ArrayList<SimulationEvent> events = new ArrayList<>(20); //TODO: переделать на автоматически сортируемую структуру!
 
+    private static Time limit = null;
+    
+    
 	public static void continue_() {
 		while(!events.isEmpty()){
 			SimulationEvent next = getNextEvent();
+            events.remove(next);
 			now=next.getEventTime();
+            if(limit!=null){
+                if(limit.compareTo(now)<0){
+                    now=limit;
+                    break;
+                }
+            }
 			try{
 				next.fire();
 			}catch (BlockIsBusyException e) {
@@ -26,19 +36,24 @@ public class TimeMachine {
 	}
     
     public static void delaySome(EventTarget target){
-    	/* FIXME: проанализировать возможные пути задержек. Кажется, тут могут быть дедлоки.
-    	 * 
-    	 * по-моему, надо сделать отдельную очередь для таких задержек. 
-    	 * если не останется простых - то тогда им назначать время ближайшей простой задержки
-    	 * 
-    	 * возможно, придется перегружать метод с параметром "какой блок ждем". 
-    	 * если так, нужно думать хорошую архитектуру такого решения
-    	 */
-        events.add(new SimulationEvent(getTime(), target));
+        /* FIXME: проанализировать возможные пути задержек. Кажется, тут могут быть дедлоки.
+         *
+         * по-моему, надо сделать отдельную очередь для таких задержек.
+         * если не останется простых - то тогда им назначать время ближайшей простой задержки
+         *
+         * возможно, придется перегружать метод с параметром "какой блок ждем".
+         * если так, нужно думать хорошую архитектуру такого решения
+         */
+        SimulationEvent e = new SimulationEvent(getNextEvent().getEventTime(), target);
+        events.add(e);
     }
     
     public static void delay(BigInteger delay, EventTarget target){
         events.add(new SimulationEvent(getTime().getTime().add(delay),target));
+    }
+    
+    public static void delay(BigInteger delay, EventTarget target, Transaction linked){
+        events.add(new SimulationEvent(getTime().getTime().add(delay),target,linked));
     }
 
 	private static SimulationEvent getNextEvent(){
@@ -53,11 +68,19 @@ public class TimeMachine {
 			}
 		}
         //FIXME: если максимальное время равно текущему - 30 раз пробовать и выводить исключение!
-        events.remove(mini);
-		return event;
+        return event;
 	}
 	
 	public static Time getTime(){
 		return now;
 	}
+
+    public static Time getLimit() {
+        return limit;
+    }
+
+    public static void setLimit(Time newlimit) {
+        limit = newlimit;
+    }
+    
 }

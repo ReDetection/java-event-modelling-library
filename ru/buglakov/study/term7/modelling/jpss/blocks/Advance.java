@@ -9,7 +9,7 @@ import ru.buglakov.study.term7.modelling.jpss.Utils;
 import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
 import ru.buglakov.study.term7.modelling.jpss.Transaction;
 
-public class Advance extends TransactionOutput implements TransactionInput,EventTarget{
+public class Advance extends Dual implements EventTarget{
 	private final BigInteger average;
 	private final BigInteger difference;
 	private List<Transaction> tr = new ArrayList<>(20); //TODO : может, убрать отсюда queue, сделать ссылку на транзакт в Eventе?
@@ -31,7 +31,7 @@ public class Advance extends TransactionOutput implements TransactionInput,Event
 	}
 
 	@Override
-	public void fire() {
+	public void fire(Transaction _) {
 		System.out.print('<');
 		Transaction t = tr.get(0);
 		tr.remove(0);

@@ -1,5 +1,6 @@
 package ru.buglakov.study.term7.modelling.jpss.blocks;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,10 @@ public class DiffStopwatch implements Multipoint{
     				+DiffStopwatch.class.getName() + " до того, как вышла!");
 		}
 	}
+
+    void cancelStart(String key) {
+        map.remove(key);
+    }
 	
 	protected LogEntry stop(String transactionKey) {
 		Timer t = map.get(transactionKey);
@@ -55,8 +60,16 @@ public class DiffStopwatch implements Multipoint{
 		
 	}
 	
-	public List<LogEntry> getLog() {
+	public List<LogEntry> getFullLog() {
 		return log;
 	}
+    
+    public List<BigInteger> getLog(){
+        ArrayList<BigInteger> result =  new ArrayList<>(log.size());
+        for(LogEntry e : log){
+            result.add(e.timer.getDiff());
+        }
+        return result;
+    }
 	
 }

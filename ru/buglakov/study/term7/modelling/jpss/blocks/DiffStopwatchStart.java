@@ -2,6 +2,7 @@ package ru.buglakov.study.term7.modelling.jpss.blocks;
 
 
 import ru.buglakov.study.term7.modelling.jpss.Transaction;
+import ru.buglakov.study.term7.modelling.jpss.exceptions.BlockIsBusyException;
 
 public class DiffStopwatchStart extends Dual {
 	private final DiffStopwatch model;
@@ -13,13 +14,12 @@ public class DiffStopwatchStart extends Dual {
     @Override
     public void receive(Transaction transaction) {
     	model.start(transaction.getKey());
-//    	if(prev!=null){
-//    		Logger.getLogger(DiffStopwatchStart.class.getName()).log(Level.WARNING, 
-//    				"Транзакция " +transaction.getKey() +" от " + transaction.getCreationTime() + " попала в счетчик "
-//    				+DiffStopwatchStart.class.getName() + " не первый раз!");
-//    		
-//    	}
-    	transaction.sendTo(getNext());
+    	try{
+            transaction.sendTo(getNext());
+        }catch(BlockIsBusyException e){
+            model.cancelStart(transaction.getKey());
+            throw e;
+        }
     }
     
     

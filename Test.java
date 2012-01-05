@@ -1,3 +1,8 @@
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Collection;
+import ru.buglakov.study.term7.modelling.jpss.Time;
+import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
 import ru.buglakov.study.term7.modelling.jpss.blocks.*;
 
 
@@ -5,27 +10,61 @@ public class Test {
 
 	
 	public static void main(String[] args) {
-		Generate[] g = new Generate[1];
-		g[0] = new Generate(200, 100);
+		Generate g = new Generate(200, 100);
 		Advance a = new Advance(200, 100);
-		
-		
+		SimpleStopwatch simpleStopwatch =  new SimpleStopwatch(); 
+		SimpleStopwatch simpleStopwatch2 =  new SimpleStopwatch(); 
 		DiffStopwatch stopwatch = new DiffStopwatch();
 		DiffStopwatchStart stopwatchStart = stopwatch.createStart();
-		g[0].setNext(stopwatchStart);
-		stopwatchStart.setNext(a);
 		DiffStopwatchFinish stopwatchFinish = stopwatch.createFinish();
-        a.setNext(stopwatchFinish);
+        
+        Queue q = new Queue();
+		DiffStopwatch queuestopwatch = new DiffStopwatch();
+        SeizableDevice dev = new SeizableDevice();
+        MultipointSimplifier device = new MultipointSimplifier(dev, a);
+        MultipointSimplifier queue = new MultipointSimplifier(queuestopwatch, q);
+        
 		
+		g.setNext(simpleStopwatch);
+        simpleStopwatch.setNext(stopwatchStart);
+		stopwatchStart.setNext(queue);
+        queue.setNext(simpleStopwatch2);
+        simpleStopwatch2.setNext(device);
+        device.setNext(stopwatchFinish);
+        
+        
+		stopwatchFinish.setNext(new Terminate());
 		
-        Counter c = new Counter();
-		stopwatchFinish.setNext(c);
-        c.setNext(new Terminate());
-		Start start = new Start(10, g);
+		TimeMachine.setLimit(new Time(new BigInteger("20000")));
+		Start start = new Start(null, g);
 		start.run();
         System.out.println();
-        System.out.println(c.getCounter());
+        System.out.println(simpleStopwatch.getLog());
+        System.out.println(simpleStopwatch2.getLog());
+        System.out.println(queuestopwatch.getLog());
         System.out.println(stopwatch.getLog());
+        System.out.println("Среднее время заявки в очереди: "+avg(queuestopwatch.getLog()));
+        System.out.println("Среднее время заявки в системе: "+avg(stopwatch.getLog()));
+        System.out.println("Время моделирования: " + TimeMachine.getTime());
+        
 	}
+    
+    
+    
+    
+    
+    
+    
+    public static BigInteger sum(Collection<BigInteger> log){
+        BigInteger result = BigInteger.ZERO;
+        for(BigInteger a: log){
+            result = result.add(a);
+        }
+        return result;    
+    }
+    
+    public static BigDecimal avg(Collection<BigInteger> log){
+        return new BigDecimal(sum(log)).divide(new BigDecimal(log.size()));
+    }
 
 }

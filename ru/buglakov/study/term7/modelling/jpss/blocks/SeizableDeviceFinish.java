@@ -1,8 +1,11 @@
 package ru.buglakov.study.term7.modelling.jpss.blocks;
 
+import java.math.BigInteger;
+import ru.buglakov.study.term7.modelling.jpss.EventTarget;
+import ru.buglakov.study.term7.modelling.jpss.TimeMachine;
 import ru.buglakov.study.term7.modelling.jpss.Transaction;
 
-public class SeizableDeviceFinish extends Dual {
+public class SeizableDeviceFinish extends Dual implements EventTarget{
 
 	private final SeizableDevice device;
 	
@@ -13,8 +16,14 @@ public class SeizableDeviceFinish extends Dual {
 	
 	@Override
 	public void receive(Transaction transaction) {
-		device.release(transaction);
-		transaction.sendTo(getNext());
+        TimeMachine.delay(TimeMachine.getTime().getTime(), this,transaction);
+		
 	}
+
+    @Override
+    public void fire(Transaction linked) {
+        device.release(linked);
+		linked.sendTo(getNext());
+    }
 
 }

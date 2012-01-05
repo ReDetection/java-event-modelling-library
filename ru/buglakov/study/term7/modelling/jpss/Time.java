@@ -19,5 +19,12 @@ public class Time implements Comparable<Time> {
 	public int compareTo(Time o) {
 		return value.compareTo(o.getTime());
 	}
+
+    @Override
+    public String toString() {
+        return getTime().toString();
+    }
+    
+    
 	
 }

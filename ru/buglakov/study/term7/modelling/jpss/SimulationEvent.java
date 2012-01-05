@@ -6,14 +6,26 @@ public class SimulationEvent{
 	
 	private final Time fireAt;
 	private final EventTarget target;
+    private final Transaction linked;
 
 	public SimulationEvent(BigInteger fireAfter, EventTarget target) {
-		this(new Time(fireAfter.add(TimeMachine.getTime().getTime())),target);
+		this(new Time(fireAfter),target,null);
+	}
+    
+	public SimulationEvent(BigInteger fireAfter, EventTarget target,Transaction linked) {
+		this(new Time(fireAfter),target,linked);
 	}
 	
+	public SimulationEvent(Time fireAt, EventTarget target,Transaction linked){
+		this.fireAt = fireAt;
+		this.target = target;
+        this.linked = linked;
+		
+	}
 	public SimulationEvent(Time fireAt, EventTarget target){
 		this.fireAt = fireAt;
 		this.target = target;
+        this.linked = null;
 		
 	}
 
@@ -22,7 +34,11 @@ public class SimulationEvent{
 	}
 	
 	public void fire() {
-		target.fire();
+		target.fire(linked);
 	}
+
+    public Transaction getLinked() {
+        return linked;
+    }
 	
 }
