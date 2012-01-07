@@ -1,6 +1,9 @@
 package ru.buglakov.study.term7.modelling.jpss;
 
+import static java.util.Collections.unmodifiableCollection;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,5 +47,8 @@ public class TransactionManager {
     public static List<Transaction> getSuccessful() {
         return successful;
     }
-	
+    
+    public static Collection<Transaction> getAll(){
+        return unmodifiableCollection(map.values());
+    }
 }
